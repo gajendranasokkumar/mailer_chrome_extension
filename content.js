@@ -1,5 +1,4 @@
 function fetchEmailContent() {
-  // Gmail selectors: update these if Gmail's DOM changes.
   const emailBody = document.querySelector(".a3s.aiL");
   const emailSubject = document.querySelector(".hP");
 
@@ -16,14 +15,38 @@ function fetchEmailContent() {
   }
 }
 
-// Listen for a message from the popup requesting email data
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "fetchEmailData") {
     const content = fetchEmailContent();
     if (content) {
       sendResponse({ emailData: content });
     } else {
-      sendResponse({}); // Return empty response if no data is found
+      sendResponse({}); 
+    }
+  } else if (request.action === "injectResponse") {
+    const responseText = request.response;
+    const subject = request.subject;
+
+    const composeButton = document.querySelector(".T-I.T-I-KE.L3");
+    if (composeButton) {
+      composeButton.click();
+
+      setTimeout(() => {
+        const emailBody = document.querySelector(".Am.Al.editable.LW-avf.tS-tW");
+        if (emailBody) {
+          emailBody.innerText = responseText;
+        }
+
+        const emailSubject = document.querySelector("input[name='subjectbox']");
+        if (emailSubject) {
+          emailSubject.value = "Re: " + subject;
+        }
+
+        const emailRecipient = document.querySelector("textarea[name='to']");
+        if (emailRecipient) {
+          emailRecipient.value = "recipient@example.com";
+        }
+      }, 2000); 
     }
   }
   return true;

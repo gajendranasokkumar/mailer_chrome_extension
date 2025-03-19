@@ -111,6 +111,7 @@ document.getElementById("send-query").addEventListener("click", () => {
   document.getElementById("loading-icon").style.display = "block";
   document.getElementById("response-container").style.display = "none";
   document.getElementById("copy-response").style.display = "none";
+  document.getElementById("inject-response").style.display = "none";
   
   fetch('https://augusemail.onrender.com/process_email', {
     method: 'POST',
@@ -118,8 +119,7 @@ document.getElementById("send-query").addEventListener("click", () => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ 
-      email_content: emailBody, 
-      email_subject: emailSubject,
+      email_content: emailBody + emailSubject, 
       user_query: userQuery 
     })
   })
@@ -134,6 +134,7 @@ document.getElementById("send-query").addEventListener("click", () => {
     document.getElementById("response-container").innerText = data.response;
     document.getElementById("response-container").style.display = "block";
     document.getElementById("copy-response").style.display = "block";
+    document.getElementById("inject-response").style.display = "block";
   })
   .catch(error => {
     document.getElementById("loading-icon").style.display = "none";
@@ -158,5 +159,16 @@ document.getElementById("copy-response").addEventListener("click", () => {
     setTimeout(() => {
       errorMsg.style.display = "none";
     }, 2000);
+  });
+});
+
+document.getElementById("inject-response").addEventListener("click", () => {
+  const responseText = document.getElementById("response-container").innerText;
+  const subjectText = document.getElementById("email-subject").innerText;
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs && tabs.length > 0) {
+      const tabId = tabs[0].id;
+      chrome.tabs.sendMessage(tabId, { action: "injectResponse", response: responseText, subject: subjectText});
+    }
   });
 });

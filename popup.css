@@ -303,3 +303,7 @@ button:active {
 .dark-mode ::-webkit-scrollbar-thumb:hover {
   background: #777;
 }
+
+#copy-response {
+  margin-bottom: 15px;
+}
