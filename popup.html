@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Emailer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <h1>AI Emailer</h1>
+    <p id="fetch-status">Fetching data from the current email...</p>
+    <div id="email-container">
+      <div id="email-subject" class="email-section"></div>
+      <div id="email-body" class="email-section"></div>
+    </div>
+    <input type="text" id="user-query" placeholder="Enter your query">
+    <button id="send-query">Send Query</button>
+    <div id="loading-icon" class="loading-icon" style="display: none;"></div>
+    <div id="response-container" class="response-container" style="display: none;"></div>
+    <br />
+    <p id="copy-success" class="success-message" style="display: none;">Successfully copied!</p>
+    <button id="copy-response" style="display: none;">Copy Response</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

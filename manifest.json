@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "AI Emailer",
+  "version": "1.0",
+  "description": "Fetch data from a specific email when opened.",
+  "permissions": ["activeTab", "scripting", "tabs"],
+  "host_permissions": ["https://mail.google.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon1.png",
+      "48": "icon1.png",
+      "128": "icon1.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
