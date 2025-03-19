@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "AI Emailer",
+  "name": "Mailify",
   "version": "1.0",
   "description": "Fetch data from a specific email when opened.",
   "permissions": ["activeTab", "scripting", "tabs"],
